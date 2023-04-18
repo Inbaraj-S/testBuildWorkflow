@@ -12,20 +12,15 @@ jobs:
       - name: Set up Go 1.x
         uses: actions/setup-go@v2
         with:
-          go-version: 1.17.5
+          go-version: 1.19
         id: go
 
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
 
-      - name: build the binary
-        run: |
-          go build -mod vendor -o dist/provider ./cmd/server/main.go
-
       - name: Run Unit Tests
         run: |
-          go test -covermode=count -coverprofile=profile.cov ./...
-
+          go test -covermode=count -coverprofile=profile.cov ./pkg/...
       - name: Send coverage
         env:
           COVERALLS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
